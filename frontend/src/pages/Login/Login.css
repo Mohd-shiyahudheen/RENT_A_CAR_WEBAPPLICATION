@@ -1,0 +1,14 @@
+.loginContainer {
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+    background: transparent;
+    align-items: center;
+}
+
+.login {
+    min-height: 100vh;   
+    background-image: url(./pexels-charles-kettor-1005162.jpg);
+    background-position: center;
+    background-size: cover; 
+}

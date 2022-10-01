@@ -1,0 +1,10 @@
+.register {
+    min-height: 100vh;
+    background-image: url(./pexels-mike-b-120049.jpg);
+    background-position: center;
+    background-size: cover;
+}
+
+.otppp{
+    margin-left: 30px;
+}

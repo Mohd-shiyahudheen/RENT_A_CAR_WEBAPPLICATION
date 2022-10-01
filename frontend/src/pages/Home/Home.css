@@ -1,0 +1,26 @@
+.main {
+    min-height: 75vh;
+    display: flex;
+    align-items: center;
+    background-image: url(./rent-a-car-1.jpg);
+    background-position: center;
+    background-size: cover;
+}
+/* .card1{
+    margin-top: -40px;
+} */
+
+.input2 {
+    margin: 10px;
+    height: 30px;
+    width: 150px;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 1rem;
+    background-color: #eef2f3;
+}
+.fm-1{
+    background-color:rgb(4, 4, 129);
+}
