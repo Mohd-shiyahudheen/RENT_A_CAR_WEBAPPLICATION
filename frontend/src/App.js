@@ -1,7 +1,6 @@
 import React  from 'react'
 import './App.css';
 import { BrowserRouter as Router, Route, Routes, } from 'react-router-dom'
-// import 'react-toastify/dist/ReactToastify.css'
 import Home from './pages/Home/Home';
 import Login from './pages/Login/Login';
 import Signup from './pages/Register/Signup';
@@ -18,7 +17,9 @@ import BookedCars from './Admin/BookedCars/BookedCars';
 import CancelledBooking from './Admin/CancelledBooking/CancelledBooking';
 import UserManagement from './Admin/UserManagement/UserManagement';
 import ManageBlog from './Admin/ManageBlog/ManageBlog';
-// import { ToastContainer } from 'react-bootstrap';
+import Payment from './pages/Payment/Payment';
+
+
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           <Route path='/blog' element={<Blog/>}></Route>
           <Route path='/about' element={<About />}></Route>
           <Route path='/booking/:carId' element={<BookingDetails/>}></Route>
+          <Route path='/payment' element={<Payment/>}></Route>
 
 
           <Route path='/adminHome' element={<AdminHome/>}></Route>
@@ -45,7 +47,6 @@ function App() {
           <Route path='/viewUser' element={<UserManagement />}></Route>
           <Route path='/viewBlog' element={<ManageBlog />}></Route>
           </Routes>
-          {/* <ToastContainer/> */}
         </main>
       </Router>
      

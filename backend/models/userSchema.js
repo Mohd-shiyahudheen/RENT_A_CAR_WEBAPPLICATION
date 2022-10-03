@@ -50,5 +50,36 @@ const BlogSchema = mongoose.Schema({
 
 const Blog = mongoose.model('Blog',BlogSchema)
 
+const BookingSchema = mongoose.Schema({
+    from:{
+        type:String,
+        required: true
+    },
+    to:{
+        type:String,
+        required: true
+    },
+    adhaarNo:{
+        type:String,
+        required: true
+    },
+    licenceNo:{
+        type:String,
+        required: true
+    },
+    picupDate:{
+        type:Date,
+        required: true
+    },
+    dropoutDate:{
+        type:Date,
+        required: true
+    },
+    carId:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'Addcar'
+    }
+})
+const Booking = mongoose.model('Booking',BookingSchema)
 
-module.exports={User,Blog}
+module.exports={User,Blog,Booking}

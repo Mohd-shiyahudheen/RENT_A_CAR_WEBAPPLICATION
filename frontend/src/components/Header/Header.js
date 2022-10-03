@@ -9,9 +9,7 @@ const Header = () => {
   const navigate = useNavigate()
 
   const user = JSON.parse(localStorage.getItem("userInfo"))
-  // let user = localStorage.getItem('userInfo')
-  // user = JSON.parse(user)
-  // console.log(user);
+
   
   return (
     <div>

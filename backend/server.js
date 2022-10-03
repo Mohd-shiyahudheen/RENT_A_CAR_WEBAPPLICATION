@@ -3,10 +3,12 @@ const config = require('./config/mogodb')
 const dotenv = require('dotenv')
 const userRouter =require('./routers/userRouter')
 const adminRouter = require('./routers/adminRouter')
+const cors = require('cors')
 
 
 const app = express()
 dotenv.config()
+app.use(cors())
 
 
 app.use(express.json())

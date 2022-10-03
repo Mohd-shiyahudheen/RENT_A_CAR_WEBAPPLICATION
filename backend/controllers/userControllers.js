@@ -3,6 +3,7 @@ const asyncHandler = require("express-async-handler");
 require('dotenv').config()
 const User = require("../models/userSchema").User
 const Cars = require("../models/adminSchema").AddCars
+const Booking = require("../models/userSchema").Booking
 const generateToken = require('../utils/generateToken')
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
@@ -10,7 +11,6 @@ const serviceID = process.env.TWILIO_SERVICE_ID;
 const client = require('twilio')(accountSid, authToken);
 const {OAuth2Client} = require('google-auth-library')
 const clients = new OAuth2Client(process.env.GOOGLE_ID)
-
 
 
 
@@ -116,12 +116,6 @@ const loginUser = asyncHandler(async (req, res) => {
 
     if (user && (await bcrypt.compare(password, user.password))) {
         res.json(user)
-        // ({
-        //     _id: user.id,
-        //     name: user.name,
-        //     email: user.email,
-        //     token: generateToken(user._id),
-        // })
     } else {
         res.status(400)
         throw new Error('Invalid Username Or Password')
@@ -138,7 +132,7 @@ const displayCars=async (req,res)=>{
         res.status(500).json("data fetching  error")
     }
 }
-
+//Booking page display//   
 const BookingCar = asyncHandler(async(req,res)=>{
     const id = req.params.id;
     try {
@@ -150,6 +144,42 @@ const BookingCar = asyncHandler(async(req,res)=>{
     }
 })
 
+const bookingData = async(req,res)=>{
+    const id = req.params.id
+
+    console.log(req.body);
+    try {
+        const { from, to, adhaarNo, licenceNo, picupDate, dropoutDate, carId } = req.body
+
+        const data = await Booking.create({
+            from,
+            to,
+            adhaarNo,
+            licenceNo,
+            picupDate,
+            dropoutDate,
+            carId
+        })
+        console.log(data);
+        const carAndpayment = await Booking.findById({ _id:data._id }).populate('carId')
+        console.log(carAndpayment.carId);
+        res.status(200).json(carAndpayment)
+    } catch (error) {
+        res.status(500).json("Booking data not Added")
+    }
+}
+
+//Find Payment Details//
+// const paymentDetails =asyncHandler(async(req,res)=>{
+//     const id = req.params.id
+//     try {
+//         const carAndpayment = await Booking.findById({ _id:id }).populate('carId')
+//         console.log(carAndpayment);
+//         res.status(200).json(carAndpayment)
+//     } catch (error) {
+//         res.status(500).json("data not populated")
+//     }
+// })
 
 
 
@@ -158,5 +188,7 @@ module.exports = { registerUser,
     checkVerification,
     GoogleSignin,
     displayCars,
-    BookingCar
+    BookingCar,
+    bookingData,
+    // paymentDetails
  }
