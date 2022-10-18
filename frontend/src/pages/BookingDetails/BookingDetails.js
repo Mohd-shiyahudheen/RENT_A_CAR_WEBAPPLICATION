@@ -5,6 +5,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Footer from '../../components/Footer/Footer';
 import Header from '../../components/Header/Header';
 import './BookingDetails.css'
+import { useDispatch, useSelector } from 'react-redux';
+import { booking } from '../../redux/authSlice';
 
 const BookingDetails = () => {
     //Data Storing  States//
@@ -18,10 +20,21 @@ const BookingDetails = () => {
     const [picupDate, setPicupDate] = useState("");
     const [dropoutDate, setDropoutDate] = useState("");
 
+    const dispatch = useDispatch()
+    const { data, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth)
+    useEffect(() => {
+
+    }, [data, isError, isSuccess, isLoading, message, navigate, dispatch]);
+
 
     const navigate = useNavigate()
     const {carId} = useParams()
     console.log(carId);
+
+    const userDatas = JSON.parse(localStorage.getItem('userInfo'))
+    console.log(userDatas);
+    const userId = userDatas._id
+    console.log(userId);
 
     const SubmitBookingData = async (e) => {
         e.preventDefault()
@@ -39,15 +52,15 @@ const BookingDetails = () => {
                 licenceNo,
                 picupDate,
                 dropoutDate,
-                carId
+                carId,
+                userId
             },
                 config
             ).then(res=>{
-                console.log("323232323232");
                 console.log(res);
                 if (res) {
+                    dispatch(booking(res))
                     navigate('/payment')
-                    localStorage.setItem("BookingData",JSON.stringify(res))
                 }
             }).catch(err=>console.log(err));
             

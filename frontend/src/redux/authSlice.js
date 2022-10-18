@@ -58,17 +58,17 @@ export const display = createAsyncThunk('auth/viewUser', async (users, thunkAPI)
 
 
 //store Blog datas
-// export const blogs = createAsyncThunk('auth/blog', async (blogs, thunkAPI) => {
-//     try {
-//         localStorage.setItem("blogDt", JSON.stringify(blogs));
-//         return blogDt
+export const booking = createAsyncThunk('auth/booking', async (data, thunkAPI) => {
+    try {
+        localStorage.setItem("BookingData", JSON.stringify(data));
+        return data
 
-//     } catch (error) {
-//         const message = (error.respose && error.respose.data && error.respose.data.message) || error.message || error.toString()
-//         return thunkAPI.rejectWithValue(message)
-//     }
+    } catch (error) {
+        const message = (error.respose && error.respose.data && error.respose.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
 
-// })
+})
 
 
 
@@ -101,6 +101,41 @@ export const authSlice = createSlice({
             state.message = action.payload
             state.user = null
         })
+    },
+    extraReducers: (builder) => {
+        builder
+            .addCase(booking.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(booking.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.user = action.payload
+            })
+            .addCase(booking.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+                state.user = null
+            })
+    },
+
+    extraReducers: (builder) => {
+        builder
+            .addCase(display.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(display.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.user = action.payload
+            })
+            .addCase(display.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+                state.user = null
+            })
     },
 })
 

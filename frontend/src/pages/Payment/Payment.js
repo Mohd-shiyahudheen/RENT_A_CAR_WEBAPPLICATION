@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
@@ -18,6 +17,8 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Payment = () => {
   
@@ -25,8 +26,51 @@ const Payment = () => {
   const data = BookingData.data
   console.log(data);
 
+  const navigate = useNavigate()
 
 
+  const initPayment = (resData) => {
+    const options = {
+      key: "rzp_test_f7sa5NWzF3hQsL",
+      amount: resData.amount,
+      currency: resData.currency,
+      name: data.carId.carModel,
+      description: "Test Transaction",
+      image: data.carId.image,
+      order_id: resData.id,
+      handler: async (response) => {
+        console.log(response);
+        try {
+          const { resdata } = await axios.post("/user/verifyPayment",response).then(res=>{
+            console.log(res);
+            if (res) {
+              navigate('/bookingStatus')
+            }
+          })
+        } catch (error) {
+          console.log(error);
+        }
+      },
+      theme: {
+        color: "#3399cc",
+      },
+    };
+    const rzp1 = new window.Razorpay(options);
+    rzp1.open();
+  };
+
+  //Razorpay Payment//
+  const handlePayment = async()=>{
+    try {
+      const dayRent =data.carId.dayRent
+      const {paymentData}  = await axios.post('/user/razorpay',{amount:dayRent}).then(res=>{
+        console.log(res.data.data);
+        initPayment(res.data.data);
+      })    
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
  
 //table//
@@ -98,21 +142,21 @@ const Payment = () => {
                         {data.carId.carModel}
                       </Typography>
                       <Typography className='d-flex' variant="body2" color="text.secondary">
-                        <Button style={{ height: "40px", width: "80px", marginLeft: "30px" }}  variant="outlined" color="info">
+                        <Button style={{ height: "40px", width: "90px", marginLeft: "15px" }}  variant="outlined" color="info">
                           {data.carId.fuelType}
                         </Button>
-                        <Button style={{ height: "40px", width: "80px", marginLeft: "10px" }} variant="outlined" color="success">
+                        <Button style={{ height: "40px", width: "90px", marginLeft: "10px" }} variant="outlined" color="success">
                           {data.carId.seats}
                         </Button>
-                        <Button style={{ height: "40px", width: "80px", marginLeft: "10px" }} variant="outlined" color="error">
+                        <Button style={{ height: "40px", width: "90px", marginLeft: "10px" }} variant="outlined" color="error">
                           {data.carId.transmissionType}
                         </Button>
                       </Typography>
                     </CardContent>
                   </CardActionArea>
                   <CardActions>
-                    <Button className='mx-auto' color="success" variant="contained">
-                      ₹{data.carId.dayRent}
+                  <Button onClick={handlePayment} className='mx-auto' color="success" variant="contained">₹{data.carId.dayRent}
+                    {/* <Link className='text-light' to={`/razorpay/${data._id}`} style={{ textDecoration: 'none' }}> ₹{data.carId.dayRent}</Link> */}
                     </Button>
                   </CardActions>
                 </Card>

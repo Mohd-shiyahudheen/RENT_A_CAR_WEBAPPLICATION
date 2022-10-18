@@ -6,7 +6,7 @@ import AdminHeader from '../../components/AdminHeader/AdminHeader';
 import Errormessage from '../../Errormessage';
 import './AddCar.css'
 import { useSelector, useDispatch } from 'react-redux';
-import { addCar,reset } from '../../redux/authSlice';
+import { addCar} from '../../redux/authSlice';
 
 
 const AddCar = () => {

@@ -18,6 +18,7 @@ import CancelledBooking from './Admin/CancelledBooking/CancelledBooking';
 import UserManagement from './Admin/UserManagement/UserManagement';
 import ManageBlog from './Admin/ManageBlog/ManageBlog';
 import Payment from './pages/Payment/Payment';
+import BookingStatus from './pages/BookingStatus/BookingStatus';
 
 
 
@@ -35,6 +36,8 @@ function App() {
           <Route path='/about' element={<About />}></Route>
           <Route path='/booking/:carId' element={<BookingDetails/>}></Route>
           <Route path='/payment' element={<Payment/>}></Route>
+          <Route path='/bookingStatus' element={<BookingStatus/>}></Route>
+
 
 
           <Route path='/adminHome' element={<AdminHome/>}></Route>

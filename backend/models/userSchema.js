@@ -75,9 +75,16 @@ const BookingSchema = mongoose.Schema({
         type:Date,
         required: true
     },
+    bookingStatus:{
+        type:String,
+    },
     carId:{
         type: mongoose.Schema.Types.ObjectId,
         ref:'Addcar'
+    },
+    userId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     }
 })
 const Booking = mongoose.model('Booking',BookingSchema)

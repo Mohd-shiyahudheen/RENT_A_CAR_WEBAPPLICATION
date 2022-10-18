@@ -10,7 +10,6 @@ import OTPInput, { ResendOTP } from "otp-input-react";
 import GoogleLogin from "react-google-login";
 import {useSelector,useDispatch} from 'react-redux'
 import { register,reset } from "../../redux/authSlice";
-// import {toast} from 'react-toastify'
 
 
 
