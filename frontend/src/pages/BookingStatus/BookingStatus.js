@@ -43,7 +43,8 @@ const BookingStatus = () => {
         <>
             <Header />
             <div>
-                <Container className='my-5'>
+                <h3 className='text-primary my-5'>Booking Status</h3>
+                <Container className='my-3'>
                     <TableContainer component={Paper}>
                         <Table sx={{ minWidth: 700 }} aria-label="customized table">
                             <TableHead>

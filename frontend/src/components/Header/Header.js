@@ -15,7 +15,8 @@ const Header = () => {
     <div>
       <Navbar collapseOnSelect expand="lg" className='nav_1' variant="dark">
         <Container>
-          <Navbar.Brand href="#home"><Link to='/'></Link> RENT-A-CAR</Navbar.Brand>
+          <Navbar.Brand href="#home"><span><img style={{ width: '40px', height: '40px', backgroundColor: 'blue' }} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyEzXtWMNd0oNBmQuXmizjkimf5vonZF6ikbO_I_FHFBT7R96sbT0O2u7Z4_NaRzX5WZc&usqp=CAU" alt="" /></span> 
+          <Link to='/'></Link> RENT-A-CAR</Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
 
           <Navbar.Collapse id="responsive-navbar-nav">
