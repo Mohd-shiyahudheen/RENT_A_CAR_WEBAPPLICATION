@@ -231,15 +231,24 @@ const verifyPayment = asyncHandler(async (req, res) => {
 
 })
 
-//Booking status
-// const bookingStatus=asyncHandler(async(req,res)=>{
-//     try {
-        
-//     } catch (error) {
-        
-//     }
+//Booking Cancelled
+const bookingCancelled=asyncHandler(async(req,res)=>{
+    const id =req.params.id
+    console.log(id);
+    try {
+        const cancelled =await Booking.findByIdAndUpdate({_id:id},{
+            $set:{
+                bookingStatus:"cancelled"
+            }
+        },{new:true})
+        const carData = await Booking.findById(id).populate('carId')
+        console.log(carData);
+        res.status(200).json(carData)
+    } catch (error) {
+        res.status(500).json({ message: "Internal Server Error!" });
+    }
 
-// })
+})
 
 
 module.exports = {
@@ -251,5 +260,6 @@ module.exports = {
     BookingCar,
     bookingData,
     generateRazorpay, 
-    verifyPayment
+    verifyPayment,
+    bookingCancelled
 }

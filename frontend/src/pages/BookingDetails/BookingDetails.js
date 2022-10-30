@@ -33,7 +33,7 @@ const BookingDetails = () => {
 
     const userDatas = JSON.parse(localStorage.getItem('userInfo'))
     console.log(userDatas);
-    const userId = userDatas._id
+    const userId = userDatas.data._id
     console.log(userId);
 
     const SubmitBookingData = async (e) => {

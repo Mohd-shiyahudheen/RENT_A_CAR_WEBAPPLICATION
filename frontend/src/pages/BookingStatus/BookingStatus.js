@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -10,15 +10,24 @@ import Paper from '@mui/material/Paper';
 import { Container } from '@mui/material';
 import Button from '@mui/material/Button';
 import Header from '../../components/Header/Header';
+import axios from 'axios';
 // import Footer from '../../components/Footer/Footer';
 
 
 const BookingStatus = () => {
-
+    
+ 
     const bookigStatus = JSON.parse(localStorage.getItem("BookingData"))
     const data = bookigStatus.data
-    console.log(data);
 
+    const cancellBooking = async (bookingId)=>{
+        await axios.put(`/user/cancelled/${bookingId}`).then(res=>{
+            console.log(res);
+            if(res){
+                localStorage.setItem("BookingData", JSON.stringify(res));
+            }
+        }).catch(err=>console.log(err))
+    }
 
     const StyledTableCell = styled(TableCell)(({ theme }) => ({
         [`&.${tableCellClasses.head}`]: {
@@ -73,7 +82,9 @@ const BookingStatus = () => {
                                     <StyledTableCell align="center">{data.to}</StyledTableCell>
                                     <StyledTableCell align="center">{data.bookingStatus}</StyledTableCell>
                                     <StyledTableCell align="center">
-                                        <Button variant="outlined" color="error" className='my-2'>Cancell</Button>
+                                        <Button variant="outlined" color="error" className='my-2'
+                                            onClick={() => { cancellBooking(data._id) }}
+                                        >Cancell</Button>
                                     </StyledTableCell>
                                 </StyledTableRow>
 

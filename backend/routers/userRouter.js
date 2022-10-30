@@ -2,7 +2,7 @@ const express = require('express');
 const { registerUser, loginUser,
     checkVerification, GoogleSignin,
     displayCars, BookingCar, bookingData,
-    generateRazorpay, verifyPayment } = require('../controllers/userControllers');
+    generateRazorpay, verifyPayment, bookingCancelled } = require('../controllers/userControllers');
 const router = express.Router()
  
 
@@ -15,5 +15,6 @@ router.get('/booking/:id', BookingCar)
 router.post('/bookingData', bookingData)
 router.post('/razorpay', generateRazorpay)
 router.post('/verifyPayment', verifyPayment)
+router.put('/cancelled/:id',bookingCancelled)
 
 module.exports = router;
