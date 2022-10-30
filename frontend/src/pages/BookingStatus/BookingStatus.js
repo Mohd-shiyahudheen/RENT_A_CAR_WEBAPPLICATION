@@ -22,7 +22,6 @@ const BookingStatus = () => {
 
     const cancellBooking = async (bookingId)=>{
         await axios.put(`/user/cancelled/${bookingId}`).then(res=>{
-            console.log(res);
             if(res){
                 localStorage.setItem("BookingData", JSON.stringify(res));
             }

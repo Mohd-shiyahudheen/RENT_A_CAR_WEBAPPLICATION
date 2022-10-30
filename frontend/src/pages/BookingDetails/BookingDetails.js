@@ -29,12 +29,9 @@ const BookingDetails = () => {
 
     const navigate = useNavigate()
     const {carId} = useParams()
-    console.log(carId);
 
     const userDatas = JSON.parse(localStorage.getItem('userInfo'))
-    console.log(userDatas);
     const userId = userDatas.data._id
-    console.log(userId);
 
     const SubmitBookingData = async (e) => {
         e.preventDefault()
@@ -57,7 +54,6 @@ const BookingDetails = () => {
             },
                 config
             ).then(res=>{
-                console.log(res);
                 if (res) {
                     dispatch(booking(res))
                     navigate('/payment')
@@ -72,7 +68,6 @@ const BookingDetails = () => {
 
     const BookCar = async (carId)=>{
         const BookingDt = await axios.get(`/user/booking/${carId}`)
-        console.log(BookingDt.data);
         setState(BookingDt.data)
     }
 
