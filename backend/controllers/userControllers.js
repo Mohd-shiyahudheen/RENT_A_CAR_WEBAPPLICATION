@@ -24,7 +24,6 @@ const crypto = require("crypto");
 //User Signup//
 const registerUser = asyncHandler(async (req, res) => {
     const { name, email, phone, password } = req.body
-    console.log(req.body);
 
     if (!name || !email || !password || !phone) {
         res.status(400)
@@ -72,8 +71,6 @@ const checkVerification = asyncHandler(async (req, res) => {
     })
 
     if (user) {
-        console.log("okokokokok");
-        console.log(user);
         res.status(201).json({
             _id: user.id,
             name: user.name,
@@ -91,23 +88,18 @@ const checkVerification = asyncHandler(async (req, res) => {
 //Google Sign up//
 const GoogleSignin = asyncHandler(async (req, res) => {
     const { token } = req.body
-    console.log(req.body);
     const ticket = await clients.verifyIdToken({
         idToken: token,
         audience: process.env.GOOGLE_ID
     });
-    console.log(ticket);
     let users = [];
     const { name, email, picture } = ticket.getPayload()
     users = { name, email, picture };
-    console.log(users);
     const userAllReadyExist = await User.findOne({ email });
-    console.log(userAllReadyExist);
     if (userAllReadyExist) {
         return res.status(200).json({ userAllReadyExist })
     } else {
         let res = await User.create({ ...users });
-        console.log(res)
         return res.status(201).json({ name, email, picture })
     }
 })
@@ -132,7 +124,6 @@ const loginUser = asyncHandler(async (req, res) => {
 const displayCars = async (req, res) => {
     try {
         const carData = await Cars.find({})
-        console.log(carData);
         res.status(200).json(carData)
     } catch (error) {
         res.status(500).json("data fetching  error")
@@ -143,7 +134,6 @@ const BookingCar = asyncHandler(async (req, res) => {
     const id = req.params.id;
     try {
         const booking = await Cars.findById({ _id: id })
-        console.log(booking);
         res.status(200).json(booking)
     } catch (error) {
         res.status(500).json("data fetching failed")
@@ -152,8 +142,6 @@ const BookingCar = asyncHandler(async (req, res) => {
 
 const bookingData = async (req, res) => {
     const id = req.params.id
-
-    console.log(req.body);
     try {
         const { from, to, adhaarNo, licenceNo, picupDate, dropoutDate, carId, userId } = req.body
 
@@ -168,9 +156,7 @@ const bookingData = async (req, res) => {
             userId,
             bookingStatus: "booked"
         })
-        console.log(data);
         const carAndpayment = await Booking.findById({ _id: data._id }).populate('carId')
-        console.log(carAndpayment.carId);
         res.status(200).json(carAndpayment)
     } catch (error) {
         res.status(500).json("Booking data not Added")
@@ -184,10 +170,8 @@ const instance = new Razorpay({
 });
 
 const generateRazorpay = asyncHandler(async (req, res) => {
-    console.log(req.body);
     const { amount } = req.body
     try {
-        console.log(amount);
         const options = {
             amount: amount * 100,
             currency: "INR",
@@ -209,8 +193,6 @@ const generateRazorpay = asyncHandler(async (req, res) => {
 
 //Verify Payment//
 const verifyPayment = asyncHandler(async (req, res) => {
-    console.log("bahabshbahbs");
-    console.log(req.body);
     try {
         const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
         const sign = razorpay_order_id + "|" + razorpay_payment_id;
@@ -232,22 +214,20 @@ const verifyPayment = asyncHandler(async (req, res) => {
 })
 
 //Booking Cancelled
-const bookingCancelled=asyncHandler(async(req,res)=>{
-    const id =req.params.id
-    console.log(id);
+const bookingCancelled = asyncHandler(async (req, res) => {
+    const id = req.params.id
     try {
-        const cancelled =await Booking.findByIdAndUpdate({_id:id},{
-            $set:{
-                bookingStatus:"cancelled"
+        const cancelled = await Booking.findByIdAndUpdate({ _id: id }, {
+            $set: {
+                bookingStatus: "cancelled"
             }
-        },{new:true})
+        }, { new: true })
         const carData = await Booking.findById(id).populate('carId')
         console.log(carData);
         res.status(200).json(carData)
     } catch (error) {
         res.status(500).json({ message: "Internal Server Error!" });
     }
-
 })
 
 
@@ -259,7 +239,7 @@ module.exports = {
     displayCars,
     BookingCar,
     bookingData,
-    generateRazorpay, 
+    generateRazorpay,
     verifyPayment,
     bookingCancelled
 }
